@@ -1,0 +1,35 @@
+API endpoints used for automation: 
+https://developers.themoviedb.org/3/movies
+https://developers.themoviedb.org/3/movies/get-popular-movies
+
+Environment details:
+Java 1.8 JDK 
+Latest Eclipse(Eclipse IDE 2019/03): https://www.eclipse.org/downloads/
+Rest Assured Jars: https://github.com/rest-assured/rest-assured/wiki/Downloads (4 zips, except scala and spring)
+Junit jar for assertions. (https://junit.org/junit4/)
+
+Steps:
+Setup the pre-requisite for the environment in local machine environment (Java, Eclipse).
+Configure the Junit jars as external JARs for the project.
+Import the project from the repository or create new repository. Use the Java project and configured rest assured JARs.
+Download the Rest-assured jars and extract the zip (nested zips as well) and include all JARs in the java build path of the project in library as external JARs.
+Once the project dependency is resolved, execute the project from eclipse as Junit run from configurations (from test files).
+Pass the api_key as parameter in utility.constructPathForDetails("place_holder_for_api_key") located in GetDetailsTest.java
+Pass the api_key as parameter in utility.constructPathForPopular("place_holder_for_api_key") located in GetPopularTest.java
+All tests can also be run from TestSuite file as JUnit run.
+
+
+Alternative approach to automate Rest API without using Tools with parameterization: (Idea for developing automation without tools and integrating with CICD automation framework)
+Platform: Linux, Mac
+Language: Shell script
+Library: Curl
+Scope: Applicable for small scale and quick automation development for simple usecases.
+
+Bullet points:
+Design a shell script which takes baseURL, Authentication parameters, headers, query, path parameters, resource types etc as argument. 
+It can be applied to multiple Rest endpoints. Hit the end point using Curl and capture the response data of Curl in a file and search the content of file for output data, finally clean up the temporary location of artifacts.
+Error cases can be handled in shell with conditions for pass/fail.
+Script can also be made executable inside Docker environment (optional).
+Local Reporting can be deleloped as to set the arrays for number of cases per suite with boolean parameter. Based on the output, passed/failed cases can be listed for more readibility and debugging.
+CICD pipeline can be easily integration with script (Eg. Jenkins or Teamcity) with defining following: Environment Parameters, Job dependency conditions for trigger, to run suite (i.e Env is up and running), agent details, pre and post condition once the job is triggers, reporting based on CICD tool used.
+
